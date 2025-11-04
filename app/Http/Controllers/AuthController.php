@@ -27,8 +27,8 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' =>  $request->role ?? 'Cliente', // 👈 Valor por defecto
-                'status' => 'Activo', // 👈 Valor por defecto
+                'role' => $request->role ?? 'Cliente',
+                'status' => 'Activo',
             ]);
 
             return response()->json([
@@ -57,27 +57,28 @@ class AuthController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
-            // ❌ Si no existe o la contraseña no coincide
             if (!$user || !Hash::check($request->password, $user->password)) {
                 throw ValidationException::withMessages([
                     'email' => ['Las credenciales no son correctas.'],
                 ]);
             }
 
-            // 🚫 Si el usuario está inactivo
             if ($user->status !== 'Activo') {
                 return response()->json([
                     'error' => 'Tu cuenta está inactiva. Contacta al administrador.',
                 ], 403);
             }
 
-            // 🔄 Actualizar último inicio de sesión
             $user->update(['last_login' => now()]);
 
-            // 🔑 Crear token personal (para Laravel Sanctum)
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            // ✅ Respuesta con todo lo necesario
+            // ✅ Normalizar rol
+            $role = trim(strtolower($user->role));
+            $adminRoles = ['admin', 'administrator', 'administrador'];
+
+            $normalizedRole = in_array($role, $adminRoles) ? 'admin' : 'user';
+
             return response()->json([
                 'message' => 'Inicio de sesión correcto ✅',
                 'access_token' => $token,
@@ -86,7 +87,7 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
-                    'role' => $user->role, // 👈 Importante para el frontend
+                    'role' => $normalizedRole,
                     'status' => $user->status,
                 ],
             ]);
