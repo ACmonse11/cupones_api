@@ -18,6 +18,7 @@ class Coupon extends Model
         'expiration_date',
         'status',
         'category_id', // 👈 agregado para relación con categorías
+        'image',
     ];
 
     /**
