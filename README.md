@@ -59,3 +59,28 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+.env 
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=cupones_db
+DB_USERNAME=root
+DB_PASSWORD=Monse1109/*
+APP_KEY=base64:QY2y5aLmTiIT/iQjcKmMkGIZSn6GYgGpQtZsx2bh8pk=
+APP_ENV=local
+APP_DEBUG=true
+
+
+APP_URL=http://127.0.0.1:8000
+
+FILESYSTEM_DISK=public
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=noelyaguilar1234@gmail.com
+MAIL_PASSWORD=wksudzfaucoipohc
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noelyaguilar1234@gmail.com
+MAIL_FROM_NAME="Gasta y Gana"
