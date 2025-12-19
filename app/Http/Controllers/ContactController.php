@@ -25,7 +25,7 @@ Asunto: {$data['asunto']}
 Mensaje:
 {$data['mensaje']}
         ", function ($msg) use ($data) {
-            $msg->to('tu_correo_real@gmail.com'); // <-- CAMBIA A TU CORREO REAL
+            $msg->to('atencionclientes@gastaygana.com'); // <-- CAMBIA A TU CORREO REAL
             $msg->subject($data['asunto'] ?? 'Nuevo mensaje de contacto');
         });
 
@@ -34,4 +34,7 @@ Mensaje:
             'mensaje' => 'Mensaje enviado correctamente.'
         ], 200);
     }
+
+
+
 }

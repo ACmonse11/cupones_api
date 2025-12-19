@@ -28,4 +28,11 @@ class Coupon extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
+    public function downloads()
+    {
+     return $this->hasMany(\App\Models\CouponDownload::class, 'coupon_id');
+    }
+
 }

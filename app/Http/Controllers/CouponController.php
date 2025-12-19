@@ -142,4 +142,50 @@ class CouponController extends Controller
 
         return response()->json(['message' => 'Cupón eliminado ✅']);
     }
+
+public function registerDownload(Request $request, Coupon $coupon)
+{
+    $user = $request->user();
+
+    if (!$user) {
+        return response()->json(['message' => 'No autenticado'], 401);
+    }
+
+    // Revisar si ya descargó
+    $already = \App\Models\CouponDownload::where('coupon_id', $coupon->id)
+                ->where('user_id', $user->id)
+                ->first();
+
+    if ($already) {
+        return response()->json([
+            'message' => 'Ya descargaste este cupón'
+        ], 400);
+    }
+
+    // Registrar la descarga
+    \App\Models\CouponDownload::create([
+        'coupon_id' => $coupon->id,
+        'user_id' => $user->id,
+        'downloaded_at' => now()
+    ]);
+
+    return response()->json([
+        'message' => 'Descarga registrada',
+        'total_downloads' => $coupon->downloads()->count()
+    ]);
+}
+
+
+
+public function stats()
+{
+    // Total descargas por cupón
+    $stats = \App\Models\Coupon::withCount('downloads')
+        ->orderBy('downloads_count', 'desc')
+        ->get(['id', 'title']);
+
+    return response()->json($stats);
+}
+
+
 }
