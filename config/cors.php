@@ -1,0 +1,21 @@
+<?php
+
+return [
+
+    'paths' => ['api/*', 'uploads/*', 'sanctum/csrf-cookie'],
+
+    'allowed_methods' => ['*'],
+
+    // 👇 Coloca aquí la URL de tu frontend (Vue)
+    'allowed_origins' => ['http://localhost:5173', 'http://127.0.0.1:5173'],
+
+    'allowed_origins_patterns' => [],
+
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => [],
+
+    'max_age' => 0,
+
+    'supports_credentials' => false,
+];

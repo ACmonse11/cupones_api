@@ -18,6 +18,7 @@ class Coupon extends Model
         'expiration_date',
         'status',
         'category_id', // 👈 agregado para relación con categorías
+        'image',
     ];
 
     /**
@@ -27,4 +28,11 @@ class Coupon extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
+    public function downloads()
+    {
+     return $this->hasMany(\App\Models\CouponDownload::class, 'coupon_id');
+    }
+
 }
